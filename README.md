@@ -1,1 +1,1 @@
-# Jade-Events
+# Jade-Events - Designed by Kush
