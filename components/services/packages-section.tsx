@@ -1,10 +1,13 @@
 "use client"
 
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+
+const BLUR_DATA_URL = "data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
 
 const packages = [
   {
@@ -115,14 +118,22 @@ export function PackagesSection() {
                   </motion.div>
                 )}
                 <div className="relative aspect-[3/2] overflow-hidden">
-                  <motion.img
-                    src={pkg.image || "/placeholder.svg"}
-                    alt={pkg.name}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
+                  <motion.div
+                    className="relative h-full w-full"
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  />
+                  >
+                    <Image
+                      src={pkg.image || "/placeholder.svg"}
+                      alt={pkg.name}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 33vw, 90vw"
+                      priority={pkg.featured}
+                      placeholder="blur"
+                      blurDataURL={BLUR_DATA_URL}
+                    />
+                  </motion.div>
                 </div>
                 <div className="p-8">
                   <div className="mb-4">

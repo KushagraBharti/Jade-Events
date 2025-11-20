@@ -2,11 +2,17 @@
 
 import type React from "react"
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+
+const navItems = [
+  { href: "/", label: "Home", prefetch: false },
+  { href: "/services", label: "Services", prefetch: true },
+  { href: "/about", label: "About", prefetch: false },
+]
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -22,15 +28,6 @@ export function Header() {
       setHidden(false)
     }
   })
-
-  const navItems = useMemo(
-    () => [
-      { href: "/", label: "Home" },
-      { href: "/services", label: "Services" },
-      { href: "/about", label: "About" },
-    ],
-    [],
-  )
 
   useEffect(() => {
     setMobileMenuOpen(false)
@@ -55,7 +52,7 @@ export function Header() {
 
         <div className="hidden items-center gap-12 md:flex">
           {navItems.map((item) => (
-            <NavLink key={item.href} href={item.href} isActive={pathname === item.href}>
+            <NavLink key={item.href} href={item.href} isActive={pathname === item.href} prefetch={item.prefetch}>
               {item.label}
             </NavLink>
           ))}
@@ -93,7 +90,13 @@ export function Header() {
             </div>
             <div className="flex-1 flex flex-col items-center justify-center space-y-8">
               {navItems.map((item, i) => (
-                <MobileNavLink key={item.href} href={item.href} index={i} onClick={() => setMobileMenuOpen(false)}>
+                <MobileNavLink
+                  key={item.href}
+                  href={item.href}
+                  index={i}
+                  prefetch={item.prefetch}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   {item.label}
                 </MobileNavLink>
               ))}
@@ -117,9 +120,19 @@ export function Header() {
   )
 }
 
-function NavLink({ href, isActive, children }: { href: string; isActive: boolean; children: React.ReactNode }) {
+function NavLink({
+  href,
+  isActive,
+  children,
+  prefetch,
+}: {
+  href: string
+  isActive: boolean
+  children: React.ReactNode
+  prefetch?: boolean
+}) {
   return (
-    <Link href={href} className="relative group overflow-hidden">
+    <Link href={href} prefetch={prefetch} className="relative group overflow-hidden">
       <span className={`block text-sm font-medium tracking-widest uppercase transition-transform duration-500 group-hover:-translate-y-full ${isActive ? "text-white" : "text-white/70"}`}>
         {children}
       </span>
@@ -134,12 +147,14 @@ function MobileNavLink({
   href,
   onClick,
   children,
-  index
+  index,
+  prefetch,
 }: {
   href: string
   onClick: () => void
   children: React.ReactNode
   index: number
+  prefetch?: boolean
 }) {
   return (
     <motion.div
@@ -149,6 +164,7 @@ function MobileNavLink({
     >
       <Link
         href={href}
+        prefetch={prefetch}
         className="text-5xl font-serif font-light tracking-tight hover:italic transition-all"
         onClick={onClick}
       >
