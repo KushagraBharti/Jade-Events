@@ -1,7 +1,10 @@
 "use client"
 
+import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
+
+const BLUR_DATA_URL = "data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
 
 const portfolioItems = [
   {
@@ -77,14 +80,19 @@ function PortfolioItem({ item }: { item: typeof portfolioItems[0] }) {
   return (
     <div className="group relative h-[60vh] w-[35vw] shrink-0 overflow-hidden bg-white/5">
       <motion.div
-        className="h-full w-full"
+        className="relative h-full w-full"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <img
+        <Image
           src={item.image}
           alt={item.title}
-          className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+          fill
+          className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+          sizes="(min-width: 1280px) 35vw, (min-width: 1024px) 45vw, 90vw"
+          priority={item.id === 1}
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
         />
       </motion.div>
 

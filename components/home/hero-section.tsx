@@ -1,9 +1,11 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion"
-import { useRef, useEffect } from "react"
+import { type MouseEvent as ReactMouseEvent, type ReactNode, useRef, useState } from "react"
+
+const BLUR_DATA_URL = "data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
 
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null)
@@ -20,7 +22,7 @@ export function HeroSection() {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+  function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent<HTMLElement>) {
     const { left, top } = currentTarget.getBoundingClientRect()
     mouseX.set(clientX - left)
     mouseY.set(clientY - top)
@@ -48,14 +50,16 @@ export function HeroSection() {
       />
 
       {/* Background Image (Revealed by Spotlight/Scroll) */}
-      <motion.div
-        style={{ y, scale, opacity }}
-        className="absolute inset-0 z-0 opacity-40 mix-blend-screen"
-      >
-        <img
+      <motion.div style={{ y, scale, opacity }} className="absolute inset-0 z-0 opacity-40 mix-blend-screen relative">
+        <Image
           src="/elegant-south-asian-wedding-decoration-with-marigo.jpg"
           alt="Elegant event decor"
-          className="h-full w-full object-cover grayscale contrast-125"
+          fill
+          priority
+          className="object-cover grayscale contrast-125"
+          sizes="100vw"
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
         />
         <div className="absolute inset-0 bg-black/60" />
       </motion.div>
@@ -86,12 +90,18 @@ export function HeroSection() {
 
             <div className="flex gap-8">
               <MagneticButton>
-                <Link href="/#contact" className="text-white text-sm font-bold tracking-widest uppercase hover:underline decoration-1 underline-offset-8">
+                <Link
+                  href="/#contact"
+                  className="text-white text-sm font-bold tracking-widest uppercase hover:underline decoration-1 underline-offset-8"
+                >
                   Start Project
                 </Link>
               </MagneticButton>
               <MagneticButton>
-                <Link href="/#portfolio" className="text-white/50 text-sm font-bold tracking-widest uppercase hover:text-white transition-colors">
+                <Link
+                  href="/#portfolio"
+                  className="text-white/50 text-sm font-bold tracking-widest uppercase hover:text-white transition-colors"
+                >
                   View Works
                 </Link>
               </MagneticButton>
@@ -119,15 +129,15 @@ export function HeroSection() {
   )
 }
 
-function MagneticButton({ children }: { children: React.ReactNode }) {
+function MagneticButton({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
-  const handleMouse = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e
-    const { height, width, left, top } = ref.current!.getBoundingClientRect()
-    const middleX = clientX - (left + width / 2)
-    const middleY = clientY - (top + height / 2)
+  const handleMouse = (e: ReactMouseEvent<HTMLElement>) => {
+    const rect = ref.current?.getBoundingClientRect()
+    if (!rect) return
+    const middleX = e.clientX - (rect.left + rect.width / 2)
+    const middleY = e.clientY - (rect.top + rect.height / 2)
     setPosition({ x: middleX * 0.2, y: middleY * 0.2 })
   }
 
@@ -148,5 +158,3 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
     </motion.div>
   )
 }
-
-import { useState } from "react"

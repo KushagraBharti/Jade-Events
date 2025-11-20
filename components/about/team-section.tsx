@@ -1,4 +1,7 @@
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
+
+const BLUR_DATA_URL = "data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
 
 export function TeamSection() {
   return (
@@ -15,7 +18,15 @@ export function TeamSection() {
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           <Card className="overflow-hidden border-border bg-card">
             <div className="relative aspect-[3/4] overflow-hidden">
-              <img src="/placeholder.svg?height=600&width=450" alt="Co-founder" className="h-full w-full object-cover" />
+              <Image
+                src="/placeholder.svg?height=600&width=450"
+                alt="Co-founder"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
+              />
             </div>
             <div className="p-6 text-center">
               <h3 className="text-2xl font-semibold text-foreground">Nathan Vempala</h3>
@@ -29,10 +40,14 @@ export function TeamSection() {
 
           <Card className="overflow-hidden border-border bg-card">
             <div className="relative aspect-[3/4] overflow-hidden">
-              <img
+              <Image
                 src="/placeholder.svg?height=600&width=450"
                 alt="Co-founder"
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
               />
             </div>
             <div className="p-6 text-center">
