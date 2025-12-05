@@ -16,7 +16,7 @@ const portfolioItems = [
     id: 2,
     title: "Midnight Garden",
     category: "Reception",
-    image: "/images/jade-events/jade3.png",
+    image: "/images/jade-events/jade7.png",
     year: "2023"
   },
   {
