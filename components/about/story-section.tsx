@@ -8,7 +8,7 @@ export function StorySection() {
           {/* Image */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
             <Image
-              src="/two-people-working-on-event-decoration-setup.jpg"
+              src="/images/jade-events/jade6.png"
               alt="Jade Events team at work"
               fill
               sizes="(min-width:1024px) 50vw, 100vw"
