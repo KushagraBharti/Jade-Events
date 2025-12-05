@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 export function StorySection() {
   return (
     <section className="w-full bg-muted/30 py-20 md:py-32">
@@ -5,10 +7,12 @@ export function StorySection() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Image */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-            <img
+            <Image
               src="/two-people-working-on-event-decoration-setup.jpg"
               alt="Jade Events team at work"
-              className="h-full w-full object-cover"
+              fill
+              sizes="(min-width:1024px) 50vw, 100vw"
+              className="object-cover"
             />
           </div>
 

@@ -1,6 +1,6 @@
-
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { useRef } from "react"
+import Image from "next/image"
+import { motion, useMotionValue, useSpring, useTransform, type MotionProps } from "framer-motion"
+import { useRef, type ReactNode } from "react"
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -9,16 +9,16 @@ interface TiltCardProps {
     description?: string
     number?: string
     icon?: LucideIcon
-    children?: React.ReactNode
+    children?: ReactNode
     className?: string
     innerClassName?: string
     index?: number
-    initial?: any
-    whileInView?: any
-    viewport?: any
-    transition?: any
+    initial?: MotionProps["initial"]
+    whileInView?: MotionProps["whileInView"]
+    viewport?: MotionProps["viewport"]
+    transition?: MotionProps["transition"]
     enableTilt?: boolean
-    whileHover?: any
+    whileHover?: MotionProps["whileHover"]
     backgroundImage?: string
 }
 
@@ -92,12 +92,16 @@ export function TiltCard({
                         className="absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         style={{ transform: "translateZ(-1px)" }}
                     >
-                        <img
-                            src={backgroundImage}
-                            alt=""
-                            className="h-full w-full object-cover object-center"
-                        />
-                        <div className="absolute inset-0 bg-black/60" />
+                        <div className="relative h-full w-full">
+                            <Image
+                                src={backgroundImage}
+                                alt=""
+                                fill
+                                sizes="(min-width:1280px) 33vw, (min-width:1024px) 45vw, (min-width:768px) 50vw, 100vw"
+                                className="object-cover object-center"
+                            />
+                            <div className="absolute inset-0 bg-black/60" />
+                        </div>
                     </div>
                 )}
 

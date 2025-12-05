@@ -1,10 +1,11 @@
 "use client"
 
-import { TiltCard } from "@/components/ui/tilt-card"
-import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import { useRef } from "react"
 import { Check } from "lucide-react"
 import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { TiltCard } from "@/components/ui/tilt-card"
+import { Button } from "@/components/ui/button"
 
 const packages = [
   {
@@ -103,11 +104,12 @@ export function PackagesSection() {
             >
               <div className="flex flex-col h-full">
                 <div className="relative aspect-[3/2] overflow-hidden">
-                  <img
+                  <Image
                     src={pkg.image || "/placeholder.svg"}
                     alt={pkg.name}
-                    className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
-                    loading="lazy"
+                    fill
+                    sizes="(min-width:1280px) 30vw, (min-width:1024px) 45vw, 90vw"
+                    className="object-cover transition-transform duration-500 hover:scale-110"
                   />
                 </div>
                 <div className="p-8 flex flex-col flex-grow">

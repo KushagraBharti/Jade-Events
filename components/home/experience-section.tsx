@@ -1,7 +1,6 @@
 "use client"
 
-import { motion, useScroll } from "framer-motion"
-import { useRef } from "react"
+import { motion } from "framer-motion"
 import { TiltCard } from "@/components/ui/tilt-card"
 
 const steps = [
@@ -28,14 +27,8 @@ const steps = [
 ]
 
 export function ExperienceSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
-
   return (
-    <section ref={containerRef} className="relative py-32 bg-black text-white overflow-hidden">
+    <section className="relative py-32 bg-black text-white overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

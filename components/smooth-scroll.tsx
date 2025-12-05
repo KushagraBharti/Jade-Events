@@ -1,52 +1,57 @@
 "use client"
 
 import { ReactLenis } from "lenis/react"
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useRef, useState, type ReactNode } from "react"
+import { motion, useMotionValue, useSpring } from "framer-motion"
 
-export function SmoothScroll({ children }: { children: React.ReactNode }) {
-    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
-    const [isHovered, setIsHovered] = useState(false)
+export function SmoothScroll({ children }: { children: ReactNode }) {
+  const [showCursor, setShowCursor] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const hoveredRef = useRef(false)
 
-    useEffect(() => {
-        const moveCursor = (e: MouseEvent) => {
-            setCursorPosition({ x: e.clientX, y: e.clientY })
-        }
+  const cursorX = useMotionValue(0)
+  const cursorY = useMotionValue(0)
+  const smoothX = useSpring(cursorX, { stiffness: 500, damping: 28, mass: 0.5 })
+  const smoothY = useSpring(cursorY, { stiffness: 500, damping: 28, mass: 0.5 })
 
-        const handleMouseOver = (e: MouseEvent) => {
-            if ((e.target as HTMLElement).tagName === 'A' || (e.target as HTMLElement).tagName === 'BUTTON' || (e.target as HTMLElement).closest('a') || (e.target as HTMLElement).closest('button')) {
-                setIsHovered(true)
-            } else {
-                setIsHovered(false)
-            }
-        }
+  useEffect(() => {
+    const supportsFinePointer = window.matchMedia("(pointer: fine)").matches
+    if (!supportsFinePointer) return
 
-        window.addEventListener("mousemove", moveCursor)
-        window.addEventListener("mouseover", handleMouseOver)
+    setShowCursor(true)
 
-        return () => {
-            window.removeEventListener("mousemove", moveCursor)
-            window.removeEventListener("mouseover", handleMouseOver)
-        }
-    }, [])
+    const handlePointerMove = (event: PointerEvent) => {
+      cursorX.set(event.clientX)
+      cursorY.set(event.clientY)
+    }
 
-    return (
-        <ReactLenis root>
-            <motion.div
-                className={`custom-cursor ${isHovered ? "hovered" : ""}`}
-                animate={{
-                    x: cursorPosition.x,
-                    y: cursorPosition.y,
-                }}
-                transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 28,
-                    mass: 0.5
-                }}
-            />
-            <div className="grain-overlay" />
-            {children}
-        </ReactLenis>
-    )
+    const handlePointerOver = (event: PointerEvent) => {
+      const nextHovered = Boolean((event.target as HTMLElement | null)?.closest("a,button"))
+      if (hoveredRef.current !== nextHovered) {
+        hoveredRef.current = nextHovered
+        setIsHovered(nextHovered)
+      }
+    }
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true })
+    window.addEventListener("pointerover", handlePointerOver)
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("pointerover", handlePointerOver)
+    }
+  }, [cursorX, cursorY])
+
+  return (
+    <ReactLenis root>
+      {showCursor && (
+        <motion.div
+          className={`custom-cursor ${isHovered ? "hovered" : ""}`}
+          style={{ x: smoothX, y: smoothY, translateX: "-50%", translateY: "-50%" }}
+        />
+      )}
+      <div className="grain-overlay" />
+      {children}
+    </ReactLenis>
+  )
 }

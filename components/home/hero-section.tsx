@@ -1,9 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { useRef, useState, type MouseEvent, type ReactNode } from "react"
 import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion"
-import { useRef, useEffect } from "react"
 
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null)
@@ -20,7 +20,7 @@ export function HeroSection() {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent<HTMLElement>) {
     const { left, top } = currentTarget.getBoundingClientRect()
     mouseX.set(clientX - left)
     mouseY.set(clientY - top)
@@ -48,16 +48,18 @@ export function HeroSection() {
       />
 
       {/* Background Image (Revealed by Spotlight/Scroll) */}
-      <motion.div
-        style={{ y, scale, opacity }}
-        className="absolute inset-0 z-0 opacity-40 mix-blend-screen"
-      >
-        <img
-          src="/images/jade-events/stock1.jpg"
-          alt="Jade Events Decor"
-          className="h-full w-full object-cover grayscale contrast-125"
-        />
-        <div className="absolute inset-0 bg-black/70" />
+      <motion.div style={{ y, scale, opacity }} className="absolute inset-0 z-0 opacity-40 mix-blend-screen">
+        <div className="relative h-full w-full">
+          <Image
+            src="/images/jade-events/stock1.jpg"
+            alt="Jade Events Decor"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover grayscale contrast-125"
+          />
+          <div className="absolute inset-0 bg-black/70" />
+        </div>
       </motion.div>
 
       {/* Content */}
@@ -119,7 +121,7 @@ export function HeroSection() {
   )
 }
 
-function MagneticButton({ children }: { children: React.ReactNode }) {
+function MagneticButton({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
 
@@ -148,5 +150,3 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
     </motion.div>
   )
 }
-
-import { useState } from "react"

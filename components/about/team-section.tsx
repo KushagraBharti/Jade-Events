@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { TiltCard } from "@/components/ui/tilt-card"
 
 export function TeamSection() {
@@ -23,9 +24,12 @@ export function TeamSection() {
           >
             <div className="flex flex-col h-full">
               <div className="relative aspect-[3/4] overflow-hidden">
-                <img src="/placeholder.svg?height=600&width=450"
+                <Image
+                  src="/placeholder.svg?height=600&width=450"
                   alt="Aparna Jetty"
-                  className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
+                  fill
+                  sizes="(min-width:1024px) 40vw, 90vw"
+                  className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
                 />
               </div>
               <div className="p-6 text-center flex-grow flex flex-col justify-center">
@@ -48,10 +52,12 @@ export function TeamSection() {
           >
             <div className="flex flex-col h-full">
               <div className="relative aspect-[3/4] overflow-hidden">
-                <img
+                <Image
                   src="/placeholder.svg?height=600&width=450"
                   alt="Nathan Vempala"
-                  className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
+                  fill
+                  sizes="(min-width:1024px) 40vw, 90vw"
+                  className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
                 />
               </div>
               <div className="p-6 text-center flex-grow flex flex-col justify-center">
