@@ -21,7 +21,7 @@ A premium, modern website for Jade Events Decorations - a South Asian event deco
 ### Prerequisites
 
 - Node.js 18+ installed
-- npm or yarn package manager
+- npm or yarn or bun package manager
 
 ### Installation
 
@@ -29,7 +29,7 @@ A premium, modern website for Jade Events Decorations - a South Asian event deco
 2. Install dependencies:
 
 \`\`\`bash
-npm install
+bun install
 # or
 yarn install
 \`\`\`
@@ -37,7 +37,7 @@ yarn install
 3. Run the development server:
 
 \`\`\`bash
-npm run dev
+bun run dev
 # or
 yarn dev
 \`\`\`
@@ -141,8 +141,8 @@ All components are modular and can be easily rearranged or removed:
 ### Build for Production
 
 \`\`\`bash
-npm run build
-npm run start
+bun run build
+bun run start
 \`\`\`
 
 ## Next Steps
