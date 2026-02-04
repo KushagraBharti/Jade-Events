@@ -21,7 +21,7 @@ A premium, modern website for Jade Events Decorations - a South Asian event deco
 ### Prerequisites
 
 - Node.js 18+ installed
-- npm or yarn or bun package manager
+- bun package manager
 
 ### Installation
 
