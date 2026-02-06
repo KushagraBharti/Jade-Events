@@ -1,159 +1,127 @@
 "use client"
 
-import type React from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
-import { usePathname } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+]
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const { scrollY } = useScroll()
-  const pathname = usePathname()
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0
-    if (latest > previous && latest > 150) {
-      setHidden(true)
-    } else {
-      setHidden(false)
-    }
-  })
-
-  const navItems = useMemo(
-    () => [
-      { href: "/", label: "Home" },
-      { href: "/services", label: "Services" },
-      { href: "/about", label: "About" },
-    ],
-    [],
-  )
 
   useEffect(() => {
-    setMobileMenuOpen(false)
-  }, [pathname])
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <motion.header
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: "-100%" },
-      }}
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 z-50 w-full mix-blend-difference text-white"
+    <header
+      className={`fixed top-0 left-0 right-0 z-[99999] transition-all duration-500 ${
+        isScrolled ? "bg-black/80 backdrop-blur-md py-4 border-b border-white/10" : "bg-transparent py-8"
+      }`}
+      style={{ pointerEvents: 'auto' }}
     >
-      <nav className="container mx-auto flex h-24 items-center justify-between px-6 md:px-12">
-        <Link href="/" className="group" aria-label="Navigate to home">
-          <motion.div className="flex flex-col" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-            <span className="text-3xl font-serif font-bold tracking-tighter">JADE</span>
-          </motion.div>
-        </Link>
-
-        <div className="hidden items-center gap-12 md:flex">
-          {navItems.map((item) => (
-            <NavLink key={item.href} href={item.href} isActive={pathname === item.href}>
-              {item.label}
-            </NavLink>
-          ))}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button asChild className="bg-white text-black hover:bg-white/90 rounded-none px-8 h-12 text-xs tracking-[0.2em] uppercase font-bold">
-              <Link href="/#contact">Book Now</Link>
-            </Button>
-          </motion.div>
+      <div className="container mx-auto px-6 flex items-center justify-between relative z-[99999]">
+        {/* Logo */}
+        <div className="relative z-[99999]">
+          <Link 
+            href="/" 
+            className="group flex flex-col pointer-events-auto cursor-pointer"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="text-2xl font-serif font-bold tracking-tight text-white group-hover:text-jade-gold transition-colors duration-300">
+              JADE <span className="italic font-light">EVENTS</span>
+            </span>
+          </Link>
         </div>
 
-        <motion.button
-          className="md:hidden"
-          onClick={() => setMobileMenuOpen((open) => !open)}
-          aria-label="Toggle navigation"
-          aria-expanded={mobileMenuOpen}
-          whileTap={{ scale: 0.9 }}
-        >
-          <Menu className="h-8 w-8" />
-        </motion.button>
-      </nav>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-12 relative z-[99999]">
+          {navLinks.map((link) => (
+            <motion.div key={link.name} whileHover="hover" initial="initial" className="relative">
+              <Link
+                href={link.href}
+                className="relative text-xs font-mono tracking-widest uppercase text-white/70 hover:text-white transition-colors block py-2 cursor-pointer"
+              >
+                {link.name}
+              </Link>
+              <motion.span
+                className="absolute bottom-1 left-0 h-[1px] bg-jade-gold pointer-events-none"
+                variants={{
+                  initial: { width: 0 },
+                  hover: { width: "100%" }
+                }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.div>
+          ))}
+          <motion.div whileHover="hover" whileTap={{ scale: 0.95 }} className="relative overflow-hidden group/inquire">
+            <Link
+              href="/#contact"
+              className="px-6 py-2 bg-white text-black text-xs font-mono tracking-widest uppercase block cursor-pointer relative"
+            >
+              <span className="relative z-10 transition-colors duration-300 group-hover/inquire:text-white">Inquire</span>
+              <motion.span
+                className="absolute inset-0 bg-jade-gold"
+                initial={{ x: "-101%" }}
+                variants={{
+                  hover: { x: 0 }
+                }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </Link>
+          </motion.div>
+        </nav>
 
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden text-white p-2 relative z-[99999] pointer-events-auto cursor-pointer"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-50 bg-black text-white md:hidden flex flex-col"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[99998] bg-black flex flex-col items-center justify-center gap-8 pointer-events-auto"
           >
-            <div className="flex justify-end p-6">
-              <button onClick={() => setMobileMenuOpen(false)}>
-                <X className="h-8 w-8" />
-              </button>
-            </div>
-            <div className="flex-1 flex flex-col items-center justify-center space-y-8">
-              {navItems.map((item, i) => (
-                <MobileNavLink key={item.href} href={item.href} index={i} onClick={() => setMobileMenuOpen(false)}>
-                  {item.label}
-                </MobileNavLink>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="pt-8"
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-4xl font-serif font-light tracking-widest text-white hover:text-jade-gold transition-colors cursor-pointer"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <Button asChild size="lg" className="bg-white text-black hover:bg-white/90 rounded-none px-10 py-6 text-sm tracking-widest uppercase">
-                  <Link href="/#contact" onClick={() => setMobileMenuOpen(false)}>
-                    Book Now
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
+                {link.name}
+              </Link>
+            ))}
+            <Link
+              href="/#contact"
+              className="mt-4 px-12 py-4 border border-jade-gold text-jade-gold font-mono tracking-widest uppercase hover:bg-jade-gold hover:text-black transition-all duration-300 cursor-pointer"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Start Project
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
-  )
-}
-
-function NavLink({ href, isActive, children }: { href: string; isActive: boolean; children: React.ReactNode }) {
-  return (
-    <Link href={href} className="relative group overflow-hidden">
-      <span className={`block text-sm font-medium tracking-widest uppercase transition-transform duration-500 group-hover:-translate-y-full ${isActive ? "text-white" : "text-white/70"}`}>
-        {children}
-      </span>
-      <span className="absolute top-0 left-0 block text-sm font-medium tracking-widest uppercase transition-transform duration-500 translate-y-full group-hover:translate-y-0 text-white">
-        {children}
-      </span>
-    </Link>
-  )
-}
-
-function MobileNavLink({
-  href,
-  onClick,
-  children,
-  index
-}: {
-  href: string
-  onClick: () => void
-  children: React.ReactNode
-  index: number
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <Link
-        href={href}
-        className="text-5xl font-serif font-light tracking-tight hover:italic transition-all"
-        onClick={onClick}
-      >
-        {children}
-      </Link>
-    </motion.div>
+    </header>
   )
 }

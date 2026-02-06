@@ -25,6 +25,15 @@
   --ring: #ffffff;
   --radius: 0rem;
   /* Sharp edges for noir feel */
+
+  /* Indian-inspired accent colors */
+  --jade-gold: #D4AF37;
+  --jade-gold-light: #E5C76B;
+  --jade-saffron: #FF9933;
+  --jade-deep-red: #8B0000;
+  --jade-magenta: #C71585;
+  --jade-teal: #0D9488;
+  --jade-rose: #BE185D;
 }
 
 .dark {
@@ -56,18 +65,33 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Cultural accent colors */
+  --color-jade-gold: var(--jade-gold);
+  --color-jade-gold-light: var(--jade-gold-light);
+  --color-jade-saffron: var(--jade-saffron);
+  --color-jade-deep-red: var(--jade-deep-red);
+  --color-jade-magenta: var(--jade-magenta);
+  --color-jade-teal: var(--jade-teal);
+  --color-jade-rose: var(--jade-rose);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    cursor: none;
-    /* Hide default cursor */
+    cursor: none !important;
+    /* Hide default cursor everywhere */
   }
 
   body {
     @apply bg-background text-foreground antialiased selection:bg-white selection:text-black;
     overflow-x: hidden;
+  }
+
+  a, button {
+    @apply pointer-events-auto;
+    position: relative;
+    z-index: 10000;
   }
 }
 
@@ -93,11 +117,11 @@
   height: 20px;
   background: white;
   border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
+  pointer-events: none !important;
+  z-index: 100000;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
 .custom-cursor.hovered {
@@ -105,6 +129,40 @@
   height: 50px;
   background: white;
   opacity: 0.5;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4), 0 0 60px rgba(212, 175, 55, 0.2);
+}
+
+/* Accent glow utilities */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.15);
+}
+
+.glow-gold-intense {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.25), 0 0 90px rgba(212, 175, 55, 0.1);
+}
+
+.glow-saffron {
+  box-shadow: 0 0 20px rgba(255, 153, 51, 0.3), 0 0 40px rgba(255, 153, 51, 0.15);
+}
+
+.border-glow-gold {
+  border-color: var(--jade-gold);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), inset 0 0 15px rgba(212, 175, 55, 0.05);
+}
+
+/* Text gradient utilities */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--jade-gold) 0%, var(--jade-gold-light) 50%, var(--jade-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-saffron {
+  background: linear-gradient(135deg, var(--jade-saffron) 0%, var(--jade-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Utilities */
@@ -137,3 +195,49 @@ html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+/* Scroll Snap Section Styles */
+.scroll-snap-container {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+
+.scroll-snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* Soft scroll snapping for sections */
+@media (min-width: 768px) {
+  .soft-snap {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 6rem;
+  }
+
+  .soft-snap > section {
+    scroll-snap-align: start;
+  }
+}
+
+/* Henna-inspired border animation */
+.henna-border-animated {
+  position: relative;
+}
+
+.henna-border-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  background: linear-gradient(90deg, transparent, var(--jade-gold), transparent) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.henna-border-animated:hover::before {
+  opacity: 0.5;
+}
+

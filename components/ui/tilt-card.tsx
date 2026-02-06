@@ -72,7 +72,7 @@ export function TiltCard({
             viewport={viewport || { once: true }}
             transition={transition || { duration: 0.8, delay: index * 0.1 }}
             className={cn("relative h-full", className)}
-            style={{ perspective: 1000 }}
+            style={{ perspective: 800 }}
         >
             <motion.div
                 ref={ref}
@@ -81,7 +81,7 @@ export function TiltCard({
                 whileHover={whileHover}
                 style={enableTilt ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
                 className={cn(
-                    "group relative h-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors hover:bg-white/10 overflow-hidden",
+                    "group relative h-full border border-white/10 bg-white/5 backdrop-blur-sm transition-colors overflow-hidden",
                     !innerClassName?.includes("p-") && "p-8 md:p-12",
                     innerClassName
                 )}
@@ -90,7 +90,7 @@ export function TiltCard({
                 {backgroundImage && (
                     <div
                         className="absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                        style={{ transform: "translateZ(-1px)" }}
+                        style={{ transform: "translateZ(-20px)" }}
                     >
                         <div className="relative h-full w-full">
                             <Image
@@ -105,7 +105,7 @@ export function TiltCard({
                     </div>
                 )}
 
-                <div style={{ transform: "translateZ(50px)" }} className="relative z-10 flex flex-col h-full">
+                <div style={{ transform: "translateZ(80px)" }} className="relative z-10 flex flex-col h-full">
                     {number && (
                         <span className="block font-mono text-sm tracking-widest text-white/50 mb-8">{number}</span>
                     )}

@@ -3,6 +3,8 @@ import type { Metadata } from "next"
 import { Cormorant_Garamond, Inter } from "next/font/google"
 import "./globals.css"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -53,7 +55,11 @@ export default function RootLayout({
         data-gramm="false"
         data-gramm_editor="false"
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <Header />
+          {children}
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   )
