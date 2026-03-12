@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRef, useState, type MouseEvent, type ReactNode } from "react"
 import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion"
+import { siteAssets } from "@/lib/site-assets"
 
 // Floating particle component
 function FloatingParticle({ delay, duration, size, startX, startY }: {
@@ -110,12 +111,12 @@ export function HeroSection() {
       <motion.div style={{ y, scale, opacity }} className="absolute inset-0 z-0 opacity-40 mix-blend-screen">
         <div className="relative h-full w-full">
           <Image
-            src="/images/jade-events/stock1.jpg"
+            src={siteAssets.hero}
             alt="Jade Events Decor"
             fill
             priority
             sizes="100vw"
-            className="object-cover grayscale contrast-125"
+            className="object-cover grayscale-[0.2] contrast-125 saturate-[0.9]"
           />
           <div className="absolute inset-0 bg-black/70" />
         </div>

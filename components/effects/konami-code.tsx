@@ -98,8 +98,7 @@ function SparkleBurst() {
 }
 
 export function KonamiCodeProvider({ children }: { children: React.ReactNode }) {
-  const [keys, setKeys] = useState<string[]>([])
-  const [activated, setActivated] = useState(false)
+  const [, setKeys] = useState<string[]>([])
   const [showConfetti, setShowConfetti] = useState(false)
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -108,10 +107,8 @@ export function KonamiCodeProvider({ children }: { children: React.ReactNode }) 
 
       // Check if Konami code is complete
       if (newKeys.length === 10 && newKeys.every((key, i) => key === KONAMI_CODE[i])) {
-        setActivated(true)
         setShowConfetti(true)
         setTimeout(() => setShowConfetti(false), 5000)
-        setTimeout(() => setActivated(false), 100)
         return []
       }
 

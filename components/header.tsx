@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 
@@ -14,14 +15,29 @@ const navLinks = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      const nextIsScrolled = window.scrollY > 50
+      setIsScrolled((current) => (current === nextIsScrolled ? current : nextIsScrolled))
     }
-    window.addEventListener("scroll", handleScroll)
+
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
+
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    router.prefetch("/")
+    router.prefetch("/services")
+    router.prefetch("/about")
+  }, [router])
+
+  const handlePrefetch = (href: string) => {
+    router.prefetch(href)
+  }
 
   return (
     <header
@@ -35,8 +51,11 @@ export function Header() {
         <div className="relative z-[99999]">
           <Link 
             href="/" 
+            prefetch
             className="group flex flex-col pointer-events-auto cursor-pointer"
             onClick={() => setMobileMenuOpen(false)}
+            onMouseEnter={() => handlePrefetch("/")}
+            onFocus={() => handlePrefetch("/")}
           >
             <span className="text-2xl font-serif font-bold tracking-tight text-white group-hover:text-jade-gold transition-colors duration-300">
               JADE <span className="italic font-light">EVENTS</span>
@@ -50,7 +69,10 @@ export function Header() {
             <motion.div key={link.name} whileHover="hover" initial="initial" className="relative">
               <Link
                 href={link.href}
+                prefetch
                 className="relative text-xs font-mono tracking-widest uppercase text-white/70 hover:text-white transition-colors block py-2 cursor-pointer"
+                onMouseEnter={() => handlePrefetch(link.href)}
+                onFocus={() => handlePrefetch(link.href)}
               >
                 {link.name}
               </Link>
@@ -67,6 +89,7 @@ export function Header() {
           <motion.div whileHover="hover" whileTap={{ scale: 0.95 }} className="relative overflow-hidden group/inquire">
             <Link
               href="/#contact"
+              prefetch
               className="px-6 py-2 bg-white text-black text-xs font-mono tracking-widest uppercase block cursor-pointer relative"
             >
               <span className="relative z-10 transition-colors duration-300 group-hover/inquire:text-white">Inquire</span>
@@ -106,8 +129,11 @@ export function Header() {
               <Link
                 key={link.name}
                 href={link.href}
+                prefetch
                 className="text-4xl font-serif font-light tracking-widest text-white hover:text-jade-gold transition-colors cursor-pointer"
                 onClick={() => setMobileMenuOpen(false)}
+                onMouseEnter={() => handlePrefetch(link.href)}
+                onFocus={() => handlePrefetch(link.href)}
               >
                 {link.name}
               </Link>

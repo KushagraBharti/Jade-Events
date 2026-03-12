@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Reveal } from "@/components/ui/text-reveal"
+import { whatsappPhoneNumber } from "@/lib/site-assets"
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -200,10 +201,9 @@ export function ContactSection() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-    const phoneNumber = "1234567890"
     const text = `Hi Jade Events, I'm interested in your services.\n\nEmail: ${values.email}\nMessage: ${values.message}`
     const encodedText = encodeURIComponent(text)
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`
+    const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${encodedText}`
 
     setTimeout(() => {
       window.open(whatsappUrl, "_blank")

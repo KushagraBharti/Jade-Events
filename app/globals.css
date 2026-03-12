@@ -79,8 +79,6 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    cursor: none !important;
-    /* Hide default cursor everywhere */
   }
 
   body {
@@ -95,6 +93,19 @@
   }
 }
 
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+
+  html.has-custom-cursor [data-cursor="native"],
+  html.has-custom-cursor [data-cursor="native"] * {
+    cursor: auto !important;
+  }
+}
+
 /* Grain Overlay */
 .grain-overlay {
   position: fixed;
@@ -106,6 +117,7 @@
   z-index: 9998;
   opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  will-change: opacity;
 }
 
 /* Custom Cursor */
@@ -121,15 +133,20 @@
   z-index: 100000;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  will-change: transform, width, height, opacity;
+  transition: width 0.22s ease-out, height 0.22s ease-out, background-color 0.22s ease-out, box-shadow 0.22s ease-out, opacity 0.18s ease-out;
 }
 
-.custom-cursor.hovered {
-  width: 50px;
-  height: 50px;
+.custom-cursor.is-hovered {
+  width: 34px;
+  height: 34px;
   background: white;
-  opacity: 0.5;
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4), 0 0 60px rgba(212, 175, 55, 0.2);
+  opacity: 0.42;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.32), 0 0 36px rgba(212, 175, 55, 0.14);
+}
+
+.custom-cursor.is-native {
+  opacity: 0;
 }
 
 /* Accent glow utilities */

@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { TiltCard } from "@/components/ui/tilt-card"
 
 export function TeamSection() {
@@ -23,14 +22,23 @@ export function TeamSection() {
             enableTilt={false}
           >
             <div className="flex flex-col h-full">
-              <div className="relative aspect-[3/4] overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=600&width=450"
-                  alt="Aparna Jetty"
-                  fill
-                  sizes="(min-width:1024px) 40vw, 90vw"
-                  className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
-                />
+              <div className="relative aspect-[3/4] overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_35%),linear-gradient(180deg,_rgba(22,22,22,0.9),_rgba(8,8,8,1))]">
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0,transparent_48%,rgba(255,255,255,0.08)_49%,rgba(255,255,255,0.08)_51%,transparent_52%,transparent_100%),linear-gradient(0deg,transparent_0,transparent_48%,rgba(255,255,255,0.08)_49%,rgba(255,255,255,0.08)_51%,transparent_52%,transparent_100%)] opacity-40" />
+                <div className="absolute inset-6 border border-dashed border-white/20" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/35">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.35em]">Photo</span>
+                  </div>
+                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.35em] text-white/45">
+                    Headshot Placeholder
+                  </p>
+                  <p className="mt-2 max-w-[18rem] font-mono text-xs leading-relaxed text-white/30">
+                    Swap this panel with Aparna&apos;s portrait once the final image is ready.
+                  </p>
+                </div>
+                <div className="absolute left-4 top-4 border border-white/20 bg-black/50 px-3 py-2 backdrop-blur-sm">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">Creative Direction</span>
+                </div>
               </div>
               <div className="p-6 text-center flex-grow flex flex-col justify-center">
                 <h3 className="text-2xl font-semibold text-white">Aparna Jetty</h3>
@@ -51,14 +59,23 @@ export function TeamSection() {
             enableTilt={false}
           >
             <div className="flex flex-col h-full">
-              <div className="relative aspect-[3/4] overflow-hidden">
-                <Image
-                  src="/placeholder.svg?height=600&width=450"
-                  alt="Nathan Vempala"
-                  fill
-                  sizes="(min-width:1024px) 40vw, 90vw"
-                  className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110"
-                />
+              <div className="relative aspect-[3/4] overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_35%),linear-gradient(180deg,_rgba(22,22,22,0.9),_rgba(8,8,8,1))]">
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0,transparent_48%,rgba(255,255,255,0.08)_49%,rgba(255,255,255,0.08)_51%,transparent_52%,transparent_100%),linear-gradient(0deg,transparent_0,transparent_48%,rgba(255,255,255,0.08)_49%,rgba(255,255,255,0.08)_51%,transparent_52%,transparent_100%)] opacity-40" />
+                <div className="absolute inset-6 border border-dashed border-white/20" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/35">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.35em]">Photo</span>
+                  </div>
+                  <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.35em] text-white/45">
+                    Headshot Placeholder
+                  </p>
+                  <p className="mt-2 max-w-[18rem] font-mono text-xs leading-relaxed text-white/30">
+                    Swap this panel with Nathan&apos;s portrait once the final image is ready.
+                  </p>
+                </div>
+                <div className="absolute left-4 top-4 border border-white/20 bg-black/50 px-3 py-2 backdrop-blur-sm">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">Production Lens</span>
+                </div>
               </div>
               <div className="p-6 text-center flex-grow flex flex-col justify-center">
                 <h3 className="text-2xl font-semibold text-white">Nathan Vempala</h3>

@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import { motion, useMotionValue, useSpring, useTransform, type MotionProps } from "framer-motion"
 import { useRef, type ReactNode } from "react"

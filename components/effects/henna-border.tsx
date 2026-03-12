@@ -18,7 +18,7 @@ const colorMap = {
 }
 
 // SVG pattern for henna-style border
-function HennaPattern({ color, position }: { color: typeof colorMap.gold; position: "top" | "bottom" | "left" | "right" }) {
+function _HennaPattern({ color, position }: { color: typeof colorMap.gold; position: "top" | "bottom" | "left" | "right" }) {
   const isVertical = position === "left" || position === "right"
   const width = isVertical ? 20 : "100%"
   const height = isVertical ? "100%" : 20

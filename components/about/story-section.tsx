@@ -4,6 +4,7 @@ import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/ui/text-reveal"
+import { siteAssets } from "@/lib/site-assets"
 
 const paragraphs = [
   "Jade Events Decorations was born from a simple observation: many South Asian families in the DFW area were searching for decor services that truly understood their cultural traditions while offering the sophistication of modern design.",
@@ -48,8 +49,8 @@ export function StorySection() {
               style={{ y: imageY, scale: imageScale }}
             >
               <Image
-                src="/images/jade-events/jade6.png"
-                alt="Jade Events team at work"
+                src={siteAssets.story}
+                alt="A premium Jade Events celebration setup"
                 fill
                 sizes="(min-width:1024px) 50vw, 100vw"
                 className="object-cover"

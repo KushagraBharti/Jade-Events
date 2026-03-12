@@ -6,6 +6,7 @@ import { Check } from "lucide-react"
 import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { siteAssets } from "@/lib/site-assets"
 
 const packages = [
   {
@@ -21,7 +22,7 @@ const packages = [
       "Setup and breakdown",
       "Up to 50 guests",
     ],
-    image: "/images/jade-events/jade2.png",
+    image: siteAssets.packages.birthday,
   },
   {
     id: 2,
@@ -36,7 +37,7 @@ const packages = [
       "Lighting & draping",
       "Setup and breakdown",
     ],
-    image: "/images/jade-events/jade3.png",
+    image: siteAssets.packages.traditional,
   },
   {
     id: 3,
@@ -53,7 +54,7 @@ const packages = [
       "Welcome area setup",
       "Full-day coordination",
     ],
-    image: "/images/jade-events/jade6.png",
+    image: siteAssets.packages.wedding,
   },
 ]
 

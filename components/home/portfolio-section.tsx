@@ -4,42 +4,43 @@ import Image from "next/image"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { useRef, useState } from "react"
 import { Reveal } from "@/components/ui/text-reveal"
+import { siteAssets } from "@/lib/site-assets"
 
 const portfolioItems = [
   {
     id: 1,
-    title: "Royal Jaipur",
+    title: "Regal Mandap",
     category: "Wedding",
-    image: "/images/jade-events/jade2.png",
-    year: "2024"
+    image: siteAssets.portfolio[0],
+    year: "2025",
   },
   {
     id: 2,
-    title: "Midnight Garden",
+    title: "Velvet Entrance",
     category: "Reception",
-    image: "/images/jade-events/jade7.png",
-    year: "2023"
+    image: siteAssets.portfolio[1],
+    year: "2025",
   },
   {
     id: 3,
-    title: "Golden Jubilee",
-    category: "Anniversary",
-    image: "/images/jade-events/jade4.png",
-    year: "2024"
+    title: "Sweet Sixteen Noir",
+    category: "Birthday",
+    image: siteAssets.portfolio[2],
+    year: "2025",
   },
   {
     id: 4,
-    title: "Neon Sangeet",
+    title: "Rose Ceremony",
     category: "Pre-Wedding",
-    image: "/images/jade-events/jade5.png",
-    year: "2023"
+    image: siteAssets.portfolio[3],
+    year: "2025",
   },
   {
     id: 5,
-    title: "White Lotus",
+    title: "Ivory Garden",
     category: "Ceremony",
-    image: "/images/jade-events/jade6.png",
-    year: "2024"
+    image: siteAssets.portfolio[4],
+    year: "2025",
   },
 ]
 
